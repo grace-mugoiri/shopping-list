@@ -4,8 +4,8 @@ import shopping-list
 
 #defining class for the test
 class UnitTestPythonExample(unittest.TestCase):
-    """index function defined"""
     def test_index(self):
+        """index function defined"""
         return render_template("index.html")
 
 
