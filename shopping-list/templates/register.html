@@ -8,14 +8,13 @@
         </div>
         <div class="col-xs-12 col-md-6">
             
-            <form action="{url_for("login")}}">
+            <form action="{{ url_for("register") }}" method="POST">
                 <h5>Please Register Here...</h5>
-                <input type="text" class="form-control" placeholder="First Name">
-                <input type="text" class="form-control" placeholder="Second Name">
-                <input type="email" class="form-control" placeholder="e-mail">
-                <input type="password" class="form-control" placeholder="Generate Password">
-                <input type="password" class="form-control" placeholder="Confirm Password">
-                <button class="btn btn-md btn-info btn-block btn-blue">Sign up</button>
+                <input type="text" name="username" class="form-control" placeholder="Username">
+                <input type="email" name="email" class="form-control" placeholder="e-mail">
+                <input type="password" name="password" class="form-control" placeholder="Password">
+                <input type="password" name="password_confirm" class="form-control" placeholder="Confirm Password">
+                <button type="submit" class="btn btn-md btn-info btn-block btn-blue">Sign up</button>
             </form>
             
         </div> <!-- col-xs-6 -->
