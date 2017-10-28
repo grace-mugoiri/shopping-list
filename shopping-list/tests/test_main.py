@@ -1,6 +1,6 @@
 """import the necessary modules"""
 import unittest
-import shopping-list
+from shopping-list import shopping-list
 
 #defining class for the test
 class UnitTestPythonExample(unittest.TestCase):
