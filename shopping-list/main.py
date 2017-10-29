@@ -7,13 +7,16 @@ from wtforms import Form, TextField, validators, PasswordField
 app = Flask(__name__)
 app.config.from_object("config")
 
+
 class RegistrationForm(Form):
     """registration class defined"""
     username = TextField('Username:', validators=[validators.required()])
-    email = TextField('Email:', validators=[validators.required(), \
-            validators.Length(min=6, max=35)])
-    password = TextField('Password:', validators=[validators.required(), \
-    validators.Length(min=3, max=35)]) 
+    email = TextField('Email:', validators=[validators.required(),
+                                            validators.Length(min=6, max=35)])
+    password = TextField('Password:', validators=[validators.required(),
+                                                  validators.Length(min=3, max=35)])
+
+
 @app.route("/", methods=["GET", "POST"])
 def index():
     """define the index function"""
@@ -23,14 +26,21 @@ def index():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """define login function"""
-    if request.method == "POST":
-        print session["username"]        
-        if "username" in session and "password" in session:
-            return redirect(url_for("shopping_list"))
+    if request.method == "POST": #checks if method used is "POST"
+        if "username" in session and "password" in session: #checks if user's username and passwords are in session
+            password = request.form['password']
+            hashed_password = hashlib.sha256(password.encode()).hexdigest()
+            # session["password"] = hashed_password
+            if session["username"] == request.form["username"] and session["password"] == hashed_password:#checks if the credentials match the ones used in registration form
+                # session["password"] = hashed_password
+                return redirect(url_for("shopping_list"))
+            else:
+                return render_template("login.html")
         else:
-            return render_template("login")
+            return render_template("login.html")
     else:
         return render_template("login.html")
+
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -38,14 +48,17 @@ def register():
     # form = RegistrationForm(request.form)
     if request.method != "POST":
         return render_template("register.html")
-    
+
     username = request.form['username']
     password = request.form['password']
+    # email = request.form["email"]
 
     session["username"] = username
 
     hashed_password = hashlib.sha256(password.encode()).hexdigest()
     session["password"] = hashed_password
+
+    # session["email"] = email
 
     return redirect(url_for("login"))
 
