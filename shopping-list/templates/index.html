@@ -1,19 +1,12 @@
 {% extends "layout.html" %}
-{% block content %}
-<div class="panel panel-default">
-	<div class="panel-heading  btn-info">
-		<h3 class="panel-title">Shopping list</h3>
+{% block body %}
+	<div class="jumbotron text-center">
+		<h4>Welcome to ShoppingListApp</h4>
+		<button type="button">
+			<a href="/register">Sign up</a>
+		</button>
+		<button type="button">
+			<a href="/login">Log in</a>
+		</button>
 	</div>
-	<div class="panel-body">
-		<h5>Log in to start shopping  
-			<a href="/login">Login</a>
-		</h5>
-		<h5>Sign Up for an account
-			<a href="/register">Signup</a>
-		</h5>
-		<h5>Start Shopping...
-			<a href="/shopping_list">Shopping </a>
-		</h5>
-	</div>
-</div>
 {% endblock %}

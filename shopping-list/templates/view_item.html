@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block body %}
+	<div class="jumbotron text-center">
+        <h4>Your shopping list items</h4>
+        {% if items %}
+        <ul>
+            {% for item in items %}
+            <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <span class="alert alert-info alert-sm">There are no items in your shopping list</span>
+        {% endif %}
+	</div>
+{% endblock %}
