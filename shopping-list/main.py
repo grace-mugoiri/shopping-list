@@ -71,7 +71,7 @@ def shopping_list():
 class ShoppingListForm(Form):
     """shoppinglistform class defined"""
     item = TextAreaField("item", [validators.Length(min=-1, max=100)])
-    session["items"] = []
+   
 
 
 @app.route("/add_item", methods=["GET", "POST"])
@@ -81,7 +81,7 @@ def add_item():
         item = request.form["item"]
 
         if 'items' not in session:
-            # session["items"] = []
+            session["items"] = []
 
             session["items"].append(item)
         
@@ -97,19 +97,21 @@ def view_item():
     return render_template("view_item.html", items=items)
 
 @app.route("/update_item/<int:item_id>", methods=["GET", "POST"])
-def update_item(self, item_id, item):
+def update_item(item_id):
     """method for editing an item in the list"""
     # Get users items
+    old_item = session["items"][item_id]
     if request.method == "POST":
-        lst = self.session["items"]
-        for item_id in range(len(lst)):
-            out = {'item': item, "item_id": item_id}
-            old_item = out['item']
-            new_item = request.form.get('new_item')
-            self.session["items"][item_id] = new_item
+        items = session["items"]
+        new_item = request.form['new_item']
+        # print(new_item)
+        items[item_id] = new_item
+        session["items"] = items
+        print(session["items"])
+        flash("Successfully updated your item", "suceess")
+        return redirect("/view_item")
 
-            return redirect(url_for("view_item"))
-    return render_template("update_item.html", old_item =old_item, item_id=item_id)
+    return render_template("update_item.html", old_item=old_item, item_id=item_id)
 
 @app.route("/delete_item", methods=["GET", "POST"])
 def delete_item():
