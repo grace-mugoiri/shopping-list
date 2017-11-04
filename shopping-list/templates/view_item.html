@@ -3,12 +3,16 @@
 	<div class="jumbotron text-center">
         <h4>Your shopping list items</h4>
         {% if items %}
-        <ul>
+        <ol>
             {% for item in items %}
-            <li>{{ item }}</li>
+                <li>{{ item }}
+                    <a href="/update_item/{{ loop.index0 }}" class="btn btn-default ">Edit</a>
+                    <a href="/delete_item" class="btn btn-danger ">Delete</a>
+                </li>
             {% endfor %}
-        </ul>
+        </ol>            
         {% else %}
+
         <span class="alert alert-info alert-sm">There are no items in your shopping list</span>
         {% endif %}
 	</div>

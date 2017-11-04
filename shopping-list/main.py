@@ -71,6 +71,7 @@ def shopping_list():
 class ShoppingListForm(Form):
     """shoppinglistform class defined"""
     item = TextAreaField("item", [validators.Length(min=-1, max=100)])
+    session["items"] = []
 
 
 @app.route("/add_item", methods=["GET", "POST"])
@@ -80,12 +81,11 @@ def add_item():
         item = request.form["item"]
 
         if 'items' not in session:
-            session["items"] = []
+            # session["items"] = []
 
-        session["items"].append(item)
+            session["items"].append(item)
         
         flash("Added one item to your list", "success")
-        print session['items']
         return redirect(url_for("view_item"))
     
     return render_template("add_item.html")
@@ -96,10 +96,20 @@ def view_item():
     items =  [] if 'items' not in session else session['items']
     return render_template("view_item.html", items=items)
 
-@app.route("/update_item", methods=["GET", "POST"])
-def update_item():
-    """function for updating an item"""
-    pass
+@app.route("/update_item/<int:item_id>", methods=["GET", "POST"])
+def update_item(self, item_id, item):
+    """method for editing an item in the list"""
+    # Get users items
+    if request.method == "POST":
+        lst = self.session["items"]
+        for item_id in range(len(lst)):
+            out = {'item': item, "item_id": item_id}
+            old_item = out['item']
+            new_item = request.form.get('new_item')
+            self.session["items"][item_id] = new_item
+
+            return redirect(url_for("view_item"))
+    return render_template("update_item.html", old_item =old_item, item_id=item_id)
 
 @app.route("/delete_item", methods=["GET", "POST"])
 def delete_item():
