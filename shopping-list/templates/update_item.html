@@ -4,7 +4,6 @@
 <h4>Your shopping list items</h4>
 <form action="{{ url_for('update_item', item_id=item_id) }}" method="POST">
     <input type="text" class="input-xlarge " value="{{ old_item }}" name="new_item">
-    <!-- <input type="text" class="input-xlarge " placeholder="New List Name" name="new_item"> -->
     <hr>
     <button type="submit" class="btn btn-sm btn-outline-success" value="add">Update Changes</button>
 </form>
