@@ -147,7 +147,7 @@ def logout():
     flash("You are logged out!", "success")
     return redirect(url_for("login.html"))
 
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.secret_key = os.urandom(12)
-    app.run(debug=True)#Helps the server to automatically save changes in the browser
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host="0.0.0.0", port=port)
