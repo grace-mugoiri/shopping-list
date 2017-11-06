@@ -1,7 +1,10 @@
 {% extends "layout.html" %}
 {% block body %}
 	<div class="jumbotron text-center">
-        <h4>Your shopping list items</h4>
-        delete
+        <h5>Enter the name of the item you want to delete</h5>
+	<form action="{{ url_for('delete_item') }}" method="POST">
+            <input type="text" name="item" class="form-control" placeholder="Delete item">
+            <p><input class="btn btn-info" type="submit" value="delete"></p>
+        </form>
 	</div>
 {% endblock %}
