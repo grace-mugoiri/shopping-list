@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block body %}
+<title>LogIn</title>
+<div class="jumbotron text-center">
+    <!-- <div>
+        <div class="col-xs-6 col-md-3">
+        </div>
+        <div class="col-xs-6 col-md-6">  -->
+            <form action="{{url_for("login")}}" method="POST">
+                <h5>Log In Here...</h5>
+                <input type="text" name="username" class="form-control" placeholder="Username">
+                <input type="password" name="password" class="form-control" placeholder="Password">
+
+                <button class="btn btn-large btn-info btn-block btn-blue">Sign In</button>
+                <br>
+                <br>
+                <input type="checkbox">Remember me
+                <button type="forgot" class="btn  btn-info btn-sm btn-blue active"> Forgot password? </button>	
+            </form>
+            
+        <!-- </div>
+        <div class="col-xs-6 col-md-3">
+        </div>
+    </div>  -->
+</div>
+{% endblock %}
+
