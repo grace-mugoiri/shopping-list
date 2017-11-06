@@ -1,6 +1,7 @@
 """import the necessary modules"""
 import os
 import hashlib
+from functools import wraps
 from flask import Flask, render_template, redirect, request, session, url_for, flash
 from wtforms import Form, StringField, validators, PasswordField, TextAreaField
 # from shopping_list import shopping_list
@@ -62,18 +63,27 @@ def login():
 
 # shopping_list = shopping_list()
 
+def is_logged_in(f):# checks if a user is logged in
+    """function that checks if a user is logged in"""
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        """is user logged in"""
+        if 'logged_in' in session:
+            return f(*args, **kwargs)
+        else:
+            flash('Unauthorized, Please login', 'danger')
+            return redirect(url_for('login'))
+    return wrap
+
 @app.route("/shopping_list", methods=["GET", "POST"])
 def shopping_list():
     """define shopping list function"""
     return render_template("shopping_list.html") 
 
-
 class ShoppingListForm(Form):
     """shoppinglistform class defined"""
     item = TextAreaField("item", [validators.Length(min=-1, max=100)])
    
-
-
 @app.route("/add_item", methods=["GET", "POST"])
 def add_item():
     """function for adding an item"""
@@ -83,7 +93,7 @@ def add_item():
         if 'items' not in session:
             session["items"] = []
 
-            session["items"].append(item)
+        session["items"].append(item)
         
         flash("Added one item to your list", "success")
         return redirect(url_for("view_item"))
@@ -93,7 +103,7 @@ def add_item():
 @app.route("/view_item", methods=["GET"])
 def view_item():
     """function for viewing items"""
-    items =  [] if 'items' not in session else session['items']
+    items = [] if 'items' not in session else session['items']
     return render_template("view_item.html", items=items)
 
 @app.route("/update_item/<int:item_id>", methods=["GET", "POST"])
@@ -109,16 +119,28 @@ def update_item(item_id):
         session["items"] = items
         print(session["items"])
         flash("Successfully updated your item", "suceess")
-        return redirect("/view_item")
+        return redirect(url_for("view_item"))
 
     return render_template("update_item.html", old_item=old_item, item_id=item_id)
 
 @app.route("/delete_item", methods=["GET", "POST"])
 def delete_item():
-    """function for adding an item"""
-    pass
+    """function for deleting an item"""
+    if request.method == "POST":
+        item = request.form["item"]
+        session["items"] = item
 
-@app.route("/logout",)
+        if 'items' not in session:
+            session["items"] = []
+
+        session["items"].remove(item)
+        
+        flash("Deleted one item from your list", "success")
+        return redirect(url_for("view_item"))
+    
+    return render_template("delete_item.html")
+@app.route("/logout")
+@is_logged_in
 def logout():
     """define logout function"""
     session.clear()
