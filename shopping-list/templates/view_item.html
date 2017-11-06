@@ -11,11 +11,14 @@
                 </li>
             {% endfor %}
         </ol> 
+
         <a href="/add_item">Add more items</a>
         
         {% else %}
-
-        <span class="alert alert-info alert-sm">There are no items in your shopping list</span>
+        <div>
+            <span class="alert alert-info alert-sm">There are no items in your shopping list</span>
+            <span><a href="/add_item">Add items</a></span>
+        </div>
         {% endif %}
 	</div>
 {% endblock %}
