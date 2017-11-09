@@ -10,7 +10,7 @@ User Interface for a sign-up/in and shopping list dashboard. Jawamu is a shoppin
 6. Copy the link provided and paste it to your browser.
 
 # Get the app from heroku
---link--
+https://dry-harbor-84904.herokuapp.com/
 
 # UML Diagram for Shopping List APP
 <img width="835" alt="screen shot 2017-10-30 at 14 10 51" src="https://user-images.githubusercontent.com/20679425/32168363-600490a0-bd7d-11e7-9729-fbc6bfc99774.png">
