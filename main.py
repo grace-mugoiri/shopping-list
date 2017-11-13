@@ -25,20 +25,24 @@ class RegistrationForm(Form):
 def register():
     """define register function"""
     form = RegistrationForm(request.form)
-    if request.method != "POST":
-        return render_template("register.html", form=form)
+    if request.method == "POST":
+        if request.form['username'] == "" and request.form['password'] == "":
+            flash("All fields are required", "warning")  
+            return redirect(url_for("register"))
+        
+        username = request.form['username']
+        password = request.form['password']
+        #print [username, password]
+        
+        session["username"] = username
 
-    username = request.form['username']
-    password = request.form['password']
-    # email = request.form["email"]
+        hashed_password = hashlib.sha256(password.encode()).hexdigest()
+        session["password"] = hashed_password
 
-    session["username"] = username
-
-    hashed_password = hashlib.sha256(password.encode()).hexdigest()
-    session["password"] = hashed_password
-
-    flash("Successfully registered. You can now log in", "success")
-    return redirect(url_for("login"))
+        flash("Successfully registered. You can now log in", "success")
+        return redirect(url_for("login"))
+    
+    return render_template("register.html", form=form)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
