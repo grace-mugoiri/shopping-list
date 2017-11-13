@@ -7,7 +7,7 @@
             {% for item in items %}
                 <li>{{ item }}
                     <a href="/update_item/{{ loop.index0 }}" class="btn btn-default ">Edit</a>
-                    <a href="/delete_item" class="btn btn-danger ">Delete</a>
+                    <a href="/delete_item/{{ loop.index0 }}" class="btn btn-danger ">Delete</a>
                 </li>
             {% endfor %}
         </ol> 

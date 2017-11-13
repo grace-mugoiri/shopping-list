@@ -127,22 +127,23 @@ def update_item(item_id):
 
     return render_template("update_item.html", old_item=old_item, item_id=item_id)
 
-@app.route("/delete_item", methods=["GET", "POST"])
-def delete_item():
+@app.route("/delete_item/<int:item_id>", methods=["GET", "POST"])
+def delete_item(item_id):
     """function for deleting an item"""
-    if request.method == "POST":
-        item = request.form["item"]
-        session["items"] = item
+    item_to_be_deleted = session["items"][item_id]
+    if request.method == 'POST':
+        item = session["items"]
+        print(item)
 
         if 'items' not in session:
-            session["items"] = []
+            item = []
 
-        session["items"].remove(item)
+        item.pop(item_id)
+        session["items"] = item
         
         flash("Deleted one item from your list", "success")
         return redirect(url_for("view_item"))
-    
-    return render_template("delete_item.html")
+    return render_template("delete_item.html", item_to_be_deleted=item_to_be_deleted, item_id=item_id)
 @app.route("/logout")
 @is_logged_in
 def logout():
