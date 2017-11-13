@@ -1,0 +1,21 @@
+<!--takes care of messages if we are redirecting to a link-->
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+  {% for category, message in messages %}
+    <div class="alert alert-{{ category }}">{{ message }}</div>
+  {% endfor %}
+{% endif %}
+{% endwith %}
+
+<!--takes care of messages if we want to render a template-->
+{% if error %}
+    <div class="alert alert-danger">{{error}}</div>
+{% endif %}
+
+{% if msg %}
+    <div class="alert alert-success">{{msg}}</div>
+{% endif %}
+
+{% if warning %}
+<div class="alert alert-warning">{{warning}}</div>
+{% endif %}
